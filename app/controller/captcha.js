@@ -2,14 +2,15 @@
 
 const Controller = require('egg').Controller;
 
-class UserController extends Controller {
+class CaptchaController extends Controller {
 
   // 获取自己的验证码
-  async getOne() {
-    const result = await this.ctx.service.user.fun();
+  async getCode() {
+    console.log('111111111')
+    const result = await this.ctx.service.captcha.getCode();
     this.ctx.body = { result };
   }
 
 }
 
-module.exports = UserController;
+module.exports = CaptchaController;
