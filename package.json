@@ -6,6 +6,7 @@
   "dependencies": {
     "easy-mongoose-for-lib": "^1.0.4",
     "egg": "^2.2.1",
+    "egg-cors": "^2.1.1",
     "egg-mongoose": "^3.1.1",
     "egg-scripts": "^2.5.0",
     "nodemailer": "^4.7.0"

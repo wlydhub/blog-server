@@ -15,16 +15,8 @@ module.exports = appInfo => {
   };
 
   // CORS配置
-  config.cors = {
-    allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH',
-    origin: 'http://localhost:3000',
-  };
-
-  // 安全配置
-  config.security = {
-    csrf: {
-      enable: false,
-    },
+  exports.cors = {
+    origin: '*',
   };
 
   config.createCode = () => {
