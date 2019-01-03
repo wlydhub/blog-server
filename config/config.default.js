@@ -19,6 +19,13 @@ module.exports = appInfo => {
     origin: '*',
   };
 
+  // 禁用安全设置
+  exports.security = {
+    csrf: {
+      enable: false,
+    },
+  };
+
   config.createCode = () => {
     // 首先默认code为空字符串
     let code = '';
