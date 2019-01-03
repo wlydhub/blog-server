@@ -16,6 +16,14 @@ class CaptchaService extends Service {
     return true;
   }
 
+  async getCodeFromEmail(email) {
+    const data = await this.ctx.model.Captcha.findOne({ email });
+    if (data && (Date.now() - data.updatedAt.getTime() < 1000 * 60 * 5)) {
+      return data.code;
+    }
+    return null;
+  }
+
 }
 
 module.exports = CaptchaService;

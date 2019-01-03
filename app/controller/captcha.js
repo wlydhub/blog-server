@@ -8,22 +8,28 @@ class CaptchaController extends Controller {
   // 获取自己的验证码
   async getCode() {
     const { ctx, service } = this;
-    // const query = ctx.query;
-    // const result = service.captcha.getCode(query.email);
-    // if (result) {
-	  
-	    console.log('ctx.query', ctx.query)
-	  
+    const query = ctx.query;
+	  const crearRule = {
+		  email: { type: 'email' },
+	  };
+	  try {
+		  ctx.validate(crearRule, query);
+	  } catch (e) {
+		  ctx.body = { code: 1001, msg: e };
+		  return;
+	  }
+    const result = await service.captcha.getCode(query.email);
+    if (result) {
       ctx.body = {
-        data: 'asdasdasdasdasdasd',
-        sucess: 0,
+        data: result,
+        sucess: true,
       };
-    // } else {
-	   //  ctx.body = {
-		 //    success: false,
-		 //    code: 0,
-	   //  };
-    // }
+    } else {
+	    ctx.body = {
+		    success: false,
+		    code: 1002,
+	    };
+    }
   }
 
 }
