@@ -29,6 +29,11 @@ class UserService extends Service {
     return result;
   }
 
+  async getOne(data) {
+    const result = await this.ctx.model.User.findOne(data);
+    return result;
+  }
+
   async fun() {
     const data = { userName: { $in: [ '111', '222' ] } };
     const result = await this.ctx.model.User.remove(data);

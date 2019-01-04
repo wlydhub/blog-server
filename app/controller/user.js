@@ -5,8 +5,29 @@ const Controller = require('egg').Controller;
 class UserController extends Controller {
   // 登录
   async login() {
-    const result = await this.ctx.service.user.fun();
-    this.ctx.body = { result };
+    const { ctx, service } = this;
+    const body = ctx.request.body;
+    const crearRule = {
+      accound: { type: 'string' },
+      password: { type: 'string' },
+    };
+    try {
+      ctx.validate(crearRule);
+    } catch (e) {
+      ctx.body = { success: false, msg: e };
+      return;
+    }
+    // (2)验证账号是否存在相同的
+    const user = await service.user.getOne({ accound: body.accound });
+    if (user) {
+      const data = {
+        user,
+        token: 'qweasd',
+      };
+      this.ctx.body = { success: true, data };
+    } else {
+      this.ctx.body = { success: false, msg: '账号不存在' };
+    }
   }
 
   // 注册
