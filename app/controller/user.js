@@ -18,7 +18,7 @@ class UserController extends Controller {
       return;
     }
     // (2)验证账号是否存在相同的
-    const user = await service.user.getOne({ accound: body.accound });
+    const user = await service.user.getOne({ accound: body.accound, password: body.password });
     if (user) {
       const data = {
         user,
@@ -26,7 +26,7 @@ class UserController extends Controller {
       };
       this.ctx.body = { success: true, data };
     } else {
-      this.ctx.body = { success: false, msg: '账号不存在' };
+      this.ctx.body = { success: false, msg: '账号不存在/密码错误' };
     }
   }
 
