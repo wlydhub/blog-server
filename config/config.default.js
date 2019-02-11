@@ -10,8 +10,9 @@ module.exports = appInfo => {
   // add your config here
   config.middleware = [];
   config.mongoose = {
-    url: 'mongodb://127.0.0.1/example',
-    options: {},
+    url: 'mongodb://wly:123456@127.0.0.1/example',
+    options: {
+    },
   };
 
   // CORS配置
