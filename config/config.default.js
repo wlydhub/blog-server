@@ -10,7 +10,7 @@ module.exports = appInfo => {
   // add your config here
   config.middleware = [];
   config.mongoose = {
-    url: 'mongodb://wly:123456@127.0.0.1/example',
+    url: 'mongodb://127.0.0.1/blog',
     options: {
     },
   };
