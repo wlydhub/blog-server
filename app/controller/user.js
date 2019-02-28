@@ -17,17 +17,22 @@ class UserController extends Controller {
       ctx.body = { success: false, msg: e };
       return;
     }
-    // (2)验证账号是否存在相同的
-    const user = await service.user.getOne({ accound: body.accound, password: body.password });
-    if (user) {
-      const data = {
-        user,
-        token: 'qweasd',
-      };
-      this.ctx.body = { success: true, data };
-    } else {
-      this.ctx.body = { success: false, msg: '账号不存在/密码错误' };
+    // (1)验证账号是否存在相同的
+    const user = await service.user.getOne({ query: { accound: body.accound } });
+    if (!user) {
+      this.ctx.body = { success: false, msg: '账号不存在' };
+      return;
     }
+    if (user.password !== body.password) {
+      this.ctx.body = { success: false, msg: '账号不存在' };
+      return;
+    }
+    delete user.password;
+    const data = {
+      user,
+      token: 'qweasd',
+    };
+    this.ctx.body = { success: true, data };
   }
 
   // 注册
@@ -71,6 +76,24 @@ class UserController extends Controller {
     delete body.secondPassword;
     const user = await service.user.add(body);
     ctx.body = { data: { user, toke: 'qweasd' }, success: true };
+  }
+
+  // check 检查用户注册时的各种信息
+  async check() {
+    const { ctx, service } = this;
+    const body = ctx.request.body;
+    const crearRule = {
+      accound: { type: 'string' },
+      captcha: { type: 'string' },
+      email: { type: 'string' },
+      name: { type: 'string' },
+    };
+    try {
+      ctx.validate(crearRule);
+    } catch (e) {
+		  ctx.body = { success: false, msg: e };
+		  return;
+	  }
   }
 
   // 获取用户列表
