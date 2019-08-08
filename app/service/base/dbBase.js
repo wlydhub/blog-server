@@ -110,17 +110,6 @@ class DbBaseService extends Service {
   }
 
   /*
-	 * 功能：查询到对应id的数据
-	 * @param db 数据库名称可以参考app/model下的文件名称
-	 * @param id 数据的id
-	 * @return {Promise<*>}
-	 */
-  async findOneById(db, id) {
-    const result = await this.ctx.model[db].findById(id);
-    return result;
-  }
-
-  /*
 	 * 功能：查询到一个列表
 	 * @param db
 	 * @param query 条件 { name: 'wly' }
@@ -155,47 +144,6 @@ class DbBaseService extends Service {
     }
     const result = await this.ctx.model[db].find(query, select, options);
     return result;
-  }
-
-  /*
-	 * 功能：查询到一个列表
-	 * @param db
-	 * @param query 条件 { name: 'wly' }
-	 * @param select 字符串 'name type', -> 不包含 '-name -type'
-	 * @param options {
-		*   sort: { key: 1 } 排序 其中 1 为升序排列，而 -1 是用于降序排列。
-		*   skip: 正整数 要跳过的文档数。默认为0。
-		*   limit: 非负整数 要返回的最大文档数。如果未指定，则默认为无限制。限制为0相当于设置无限制。
-		* }
-	 * @return {Promise<void>}
-	 */
-  async findAndCount(db, data) {
-    let query = null;
-    let select = null;
-    let options = null;
-    if (data.query) {
-      query = data.query;
-    }
-    if (data.select) {
-      select = data.select;
-    }
-    if (data.sort || data.skip || data.limit) {
-      data.skip = data.skip ? data.skip : 1;
-      data.limit = data.limit ? data.limit : 10;
-      const skip = (parseInt(data.skip) - 1) * parseInt(data.limit) || 0;
-      const limit = parseInt(data.limit) || 10;
-      options = {
-        sort: data.sort,
-        skip,
-        limit,
-      };
-    }
-    const result = await this.ctx.model[db].find(query, select, options);
-    const count = await this.ctx.model[db].count(query);
-    return {
-      data: result,
-      count,
-    };
   }
 
   // 聚合操作-->实验中

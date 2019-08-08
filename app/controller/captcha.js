@@ -27,7 +27,7 @@ class CaptchaController extends Controller {
     } else {
 	    ctx.body = {
 		    success: false,
-		    code: 1002,
+		    msg: '验证码已发送',
 	    };
     }
   }

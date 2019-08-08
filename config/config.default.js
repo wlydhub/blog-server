@@ -10,7 +10,7 @@ module.exports = appInfo => {
   // add your config here
   config.middleware = [];
   config.mongoose = {
-    url: 'mongodb://127.0.0.1/blog',
+    url: 'mongodb://188.131.250.70/blog',
     options: {
     },
   };
@@ -27,6 +27,11 @@ module.exports = appInfo => {
     },
   };
 
+  config.middleware = [];
+  
+  // 中间件verifyUser中jwt配置
+  config.secret_key = 'wly-blog';
+
   config.createCode = () => {
     // 首先默认code为空字符串
     let code = '';
@@ -42,6 +47,6 @@ module.exports = appInfo => {
     // 将拼接好的字符串赋值给展示的Value
     return code;
   };
-
+  
   return config;
 };

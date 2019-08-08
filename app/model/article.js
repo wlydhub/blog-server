@@ -6,9 +6,11 @@ module.exports = app => {
 
   const ArticleSchema = new Schema({
     title: { type: String }, // 文章标题
-    content: { type: String }, // 文章内容
+    word: { type: String }, // 文章内容
+    tags: { type: Array }, // 文章标签
     userId: { type: String }, // 作者id
-    count: { type: String }, // 点击量
+    hits: { type: String }, // 点击量
+    wordNumber: { type: String }, // 文章的字数
   }, { timestamps: { createTime: 'created', updateTime: 'updated' } });
 
   return mongoose.model('Article', ArticleSchema);
